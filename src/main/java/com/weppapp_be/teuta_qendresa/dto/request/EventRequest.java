@@ -17,5 +17,4 @@ public class EventRequest {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private String eventType;
-    private Long createdBy;
 }

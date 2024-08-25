@@ -17,5 +17,4 @@ public class VenueRequest {
     private String postalCode;
     private String country;
     private Long capacity;
-    private Long createdBy;
 }
