@@ -58,7 +58,8 @@ public class SecurityConfig {
                 "/v3/api-docs.yaml",
                 "/swagger-ui.html",
                 "/swagger-ui/**",
-                "/api/group/**"
+                "/api/group/**",
+                "api/reservations/email",
         };
     }
 

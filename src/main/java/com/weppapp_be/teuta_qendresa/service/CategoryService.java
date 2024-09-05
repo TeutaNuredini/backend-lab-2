@@ -1,7 +1,7 @@
 package com.weppapp_be.teuta_qendresa.service;
 
 import com.weppapp_be.teuta_qendresa.dto.CategoryDto;
-import com.weppapp_be.teuta_qendresa.dto.VenueDto;
+import com.weppapp_be.teuta_qendresa.dto.CategoryWithEvents;
 import com.weppapp_be.teuta_qendresa.dto.request.CategoryRequest;
 import com.weppapp_be.teuta_qendresa.entity.Category;
 import com.weppapp_be.teuta_qendresa.exception.ResourceNotFoundException;
@@ -39,6 +39,10 @@ public class CategoryService {
     public List<CategoryDto> getAll(){
         List<Category> categories = categoryRepository.findAll();
         return categories.stream().map(categoryMapper::toDto).collect(java.util.stream.Collectors.toList());
+    }
+
+    public List<CategoryWithEvents> getAllCategoriesWithEvents() {
+        return categoryRepository.findAllCategoriesWithProperlyEvents();
     }
 
     public CategoryDto update(Long id, Map<String, Object> fields){

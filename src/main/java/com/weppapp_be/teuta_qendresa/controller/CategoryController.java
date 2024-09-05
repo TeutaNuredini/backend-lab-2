@@ -1,6 +1,7 @@
 package com.weppapp_be.teuta_qendresa.controller;
 
 import com.weppapp_be.teuta_qendresa.dto.CategoryDto;
+import com.weppapp_be.teuta_qendresa.dto.CategoryWithEvents;
 import com.weppapp_be.teuta_qendresa.dto.request.CategoryRequest;
 import com.weppapp_be.teuta_qendresa.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,12 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<List<CategoryDto>> getAll() {
         return ResponseEntity.ok(categoryService.getAll());
+    }
+
+    @GetMapping("/with-number-of-events")
+    public ResponseEntity<List<CategoryWithEvents>> getAllCategoriesWithEvents() {
+        List<CategoryWithEvents> categoriesWithEvents = categoryService.getAllCategoriesWithEvents();
+        return ResponseEntity.ok(categoriesWithEvents);
     }
 
     @PutMapping("/{id}")
