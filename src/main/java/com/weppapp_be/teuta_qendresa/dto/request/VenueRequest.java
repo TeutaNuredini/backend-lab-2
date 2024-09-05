@@ -10,11 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VenueRequest {
-    private String name;
     private String address;
     private String city;
     private String state;
-    private String postalCode;
-    private String country;
-    private Long capacity;
 }

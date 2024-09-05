@@ -1,6 +1,6 @@
 package com.weppapp_be.teuta_qendresa.controller;
 
-import com.weppapp_be.teuta_qendresa.dto.VenueDto;
+import com.weppapp_be.teuta_qendresa.dto.LocationDto;
 import com.weppapp_be.teuta_qendresa.dto.request.VenueRequest;
 import com.weppapp_be.teuta_qendresa.service.VenueService;
 import lombok.RequiredArgsConstructor;
@@ -12,29 +12,29 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/venues")
+@RequestMapping("/api/locations")
 @RequiredArgsConstructor
 public class VenueController {
 
     private final VenueService venueService;
 
     @PostMapping
-    public ResponseEntity<VenueDto> create(@RequestBody VenueRequest request) {
+    public ResponseEntity<LocationDto> create(@RequestBody VenueRequest request) {
         return new ResponseEntity<>(venueService.creat(request), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VenueDto> getById(@PathVariable Long id) {
+    public ResponseEntity<LocationDto> getById(@PathVariable Long id) {
         return ResponseEntity.ok(venueService.getById(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<VenueDto>> getAll() {
+    public ResponseEntity<List<LocationDto>> getAll() {
         return ResponseEntity.ok(venueService.getAll());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<VenueDto> update(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
+    public ResponseEntity<LocationDto> update(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
         return ResponseEntity.ok(venueService.update(id, fields));
     }
 

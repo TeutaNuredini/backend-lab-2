@@ -1,12 +1,10 @@
 package com.weppapp_be.teuta_qendresa.service;
 
-import com.weppapp_be.teuta_qendresa.dto.UserDto;
-import com.weppapp_be.teuta_qendresa.dto.VenueDto;
+import com.weppapp_be.teuta_qendresa.dto.LocationDto;
 import com.weppapp_be.teuta_qendresa.dto.request.VenueRequest;
-import com.weppapp_be.teuta_qendresa.entity.User;
-import com.weppapp_be.teuta_qendresa.entity.Venue;
+import com.weppapp_be.teuta_qendresa.entity.Location;
 import com.weppapp_be.teuta_qendresa.exception.ResourceNotFoundException;
-import com.weppapp_be.teuta_qendresa.mapper.VenueMapper;
+import com.weppapp_be.teuta_qendresa.mapper.LocationMapper;
 import com.weppapp_be.teuta_qendresa.repository.VenueRepository;
 import com.weppapp_be.teuta_qendresa.util.ReflectionUtil;
 import lombok.RequiredArgsConstructor;
@@ -21,42 +19,42 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class VenueService {
     private final VenueRepository venueRepository;
-    private final VenueMapper venueMapper;
+    private final LocationMapper locationMapper;
     private UserService userService;
 
-    public VenueDto creat(VenueRequest request){
-        Venue venue = venueMapper.toEntity(request);
-        venue.setCreatedBy(userService.getCurrentUser().getId());
-        venue.setCreatedAt(LocalDateTime.now());
-        Venue venueInDb = venueRepository.save(venue);
-        return venueMapper.toDto(venueInDb);
+    public LocationDto creat(VenueRequest request){
+        Location location = locationMapper.toEntity(request);
+        location.setCreatedBy(userService.getCurrentUser().getId());
+        location.setCreatedAt(LocalDateTime.now());
+        Location locationInDb = venueRepository.save(location);
+        return locationMapper.toDto(locationInDb);
     }
 
-    public VenueDto getById(Long id){
-        Venue venueInDb = venueRepository.findById(id).orElseThrow(
+    public LocationDto getById(Long id){
+        Location locationInDb = venueRepository.findById(id).orElseThrow(
                 ()-> new ResourceNotFoundException(String.format("Venue with id %s not found", id)));
-        return venueMapper.toDto(venueInDb);
+        return locationMapper.toDto(locationInDb);
     }
 
-    public List<VenueDto> getAll(){
-        List<Venue> venues = venueRepository.findAll();
-        return venues.stream().map(venueMapper::toDto).collect(Collectors.toList());
+    public List<LocationDto> getAll(){
+        List<Location> locations = venueRepository.findAll();
+        return locations.stream().map(locationMapper::toDto).collect(Collectors.toList());
     }
 
-    public VenueDto update(Long id, Map<String, Object> fields){
-        Venue venueInDb = venueRepository.findById(id)
+    public LocationDto update(Long id, Map<String, Object> fields){
+        Location locationInDb = venueRepository.findById(id)
                 .orElseThrow( () -> new ResourceNotFoundException(String.format("Venue with id %s not found", id)));
         fields.forEach((key, value) ->{
-            ReflectionUtil.setFieldValue(venueInDb, key, value);
+            ReflectionUtil.setFieldValue(locationInDb, key, value);
         });
-        return venueMapper.toDto(venueRepository.save(venueInDb));
+        return locationMapper.toDto(venueRepository.save(locationInDb));
     }
 
     public void delete(Long Id){
-        Venue venueInDb = venueRepository.findById(Id).orElseThrow(
+        Location locationInDb = venueRepository.findById(Id).orElseThrow(
                 ()-> new ResourceNotFoundException(String.format("Venue with id %s not found", Id)));
-        venueInDb.setDeletedAt(LocalDateTime.now());
-        venueRepository.save(venueInDb);
+        locationInDb.setDeletedAt(LocalDateTime.now());
+        venueRepository.save(locationInDb);
     }
 
 }

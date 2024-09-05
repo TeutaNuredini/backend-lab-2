@@ -1,7 +1,9 @@
 package com.weppapp_be.teuta_qendresa.controller;
 
 import com.weppapp_be.teuta_qendresa.dto.ReservationDto;
+import com.weppapp_be.teuta_qendresa.dto.request.EmailRequest;
 import com.weppapp_be.teuta_qendresa.dto.request.ReservationRequest;
+import com.weppapp_be.teuta_qendresa.service.EmailSenderService;
 import com.weppapp_be.teuta_qendresa.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,14 @@ import java.util.Map;
 public class ReservationController {
 
     private final ReservationService reservationService;
+    private final EmailSenderService emailSenderService;
+
+
+    @PostMapping("/email")
+    public String sendEmail(@RequestBody EmailRequest request) {
+        emailSenderService.sendEmail(request);
+        return "Email sent successfully!";
+    }
 
     @PostMapping
     public ResponseEntity<ReservationDto> create(@RequestBody ReservationRequest request) {

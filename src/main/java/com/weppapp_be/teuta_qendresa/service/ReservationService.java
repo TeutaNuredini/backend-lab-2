@@ -4,6 +4,8 @@ import com.weppapp_be.teuta_qendresa.dto.ReservationDto;
 import com.weppapp_be.teuta_qendresa.dto.request.ReservationRequest;
 import com.weppapp_be.teuta_qendresa.entity.Event;
 import com.weppapp_be.teuta_qendresa.entity.Reservation;
+import com.weppapp_be.teuta_qendresa.exception.IlegalNumberOfSeatsException;
+import com.weppapp_be.teuta_qendresa.exception.ReservationAlreadyExistsException;
 import com.weppapp_be.teuta_qendresa.exception.ResourceNotFoundException;
 import com.weppapp_be.teuta_qendresa.mapper.ReservationMapper;
 import com.weppapp_be.teuta_qendresa.repository.EventRepository;
@@ -27,18 +29,43 @@ public class ReservationService {
     private final UserService userService;
 
     public ReservationDto create(ReservationRequest request) {
-
         Event event = eventRepository.findById(request.getEventId())
                 .orElseThrow(() -> new ResourceNotFoundException(
                         String.format("Event with id %s not found", request.getEventId())));
+
+        if (reservationRepository.existsByUserIdAndEventId(request.getUserId(), request.getEventId())) {
+            throw new ReservationAlreadyExistsException(
+                    String.format("Reservation for user_id: %s in event_id: %s already exists",
+                            request.getUserId(), request.getEventId()));
+        }
+        validateCapacityAvailability(event, request.getNumberOfPeople());
 
         Reservation reservation = reservationMapper.toEntity(request);
         reservation.setEvent(event);
         reservation.setCreatedAt(LocalDateTime.now());
         reservation.setCreatedBy(userService.getCurrentUser().getId());
         Reservation reservationInDb = reservationRepository.save(reservation);
+        updateEventCapacity(event, request.getNumberOfPeople());
         return reservationMapper.toDto(reservationInDb);
     }
+
+    private void updateEventCapacity(Event event, Long numberOfPeople) {
+        long updatedCapacity = event.getCapacity() - numberOfPeople;
+        if (updatedCapacity < 0) {
+            throw new IlegalNumberOfSeatsException("Not enough available seats.");
+        }
+        event.setCapacity(updatedCapacity);
+        eventRepository.save(event);
+    }
+
+    private void validateCapacityAvailability(Event event, Long numberOfPeople) {
+        if (numberOfPeople > event.getCapacity() || numberOfPeople < 1) {
+            throw new IlegalNumberOfSeatsException(
+                    String.format("Invalid reservation: Requested %d seats, but only %d available.",
+                            numberOfPeople, event.getCapacity()));
+        }
+    }
+
 
     public ReservationDto getById(Long id) {
         Reservation reservationInDb = reservationRepository.findById(id)

@@ -41,4 +41,6 @@ public class Reservation extends BaseEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    @Column(name = "reservation_type")
+    private String reservationType;
 }
