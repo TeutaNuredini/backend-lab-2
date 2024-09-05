@@ -15,8 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "venues")
-public class Venue extends BaseEntity{
+@Table(name = "locations")
+public class Location extends BaseEntity{
 
     @Column(name = "name")
     private String name;
@@ -36,9 +36,6 @@ public class Venue extends BaseEntity{
     @Column(name = "country")
     private String country;
 
-    @Column(name = "capacity")
-    private Long capacity;
-
     @Column(name = "created_by")
     private Long createdBy;
 
@@ -51,7 +48,7 @@ public class Venue extends BaseEntity{
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    @OneToMany(mappedBy = "venue")
+    @OneToMany(mappedBy = "location")
     @JsonManagedReference
     private List<Event> eventList;
 }

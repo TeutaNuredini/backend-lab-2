@@ -11,17 +11,10 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class VenueDto {
+public class CategoryWithEvents {
     private Long id;
     private String name;
-    private String address;
-    private String city;
-    private String state;
-    private String postalCode;
-    private String country;
-    private Long capacity;
-    private Long createdBy;
+    private String description;
+    private Long numberOfEvents;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private LocalDateTime deletedAt;
 }
