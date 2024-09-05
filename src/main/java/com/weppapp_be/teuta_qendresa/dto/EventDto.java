@@ -15,11 +15,7 @@ public class EventDto {
     private Long categoryId;
     private String name;
     private String description;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private String eventType;
-    private Long createdBy;
+    private LocalDateTime startDate;
+    private String duration;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private LocalDateTime deletedAt;
 }

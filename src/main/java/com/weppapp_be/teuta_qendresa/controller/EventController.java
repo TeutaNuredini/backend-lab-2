@@ -1,6 +1,7 @@
 package com.weppapp_be.teuta_qendresa.controller;
 
 import com.weppapp_be.teuta_qendresa.dto.EventDto;
+import com.weppapp_be.teuta_qendresa.dto.TopSellingEventDto;
 import com.weppapp_be.teuta_qendresa.dto.request.EventRequest;
 import com.weppapp_be.teuta_qendresa.service.EventService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,22 @@ public class EventController {
     @GetMapping
     public ResponseEntity<List<EventDto>> getAll() {
         return ResponseEntity.ok(eventService.getAll());
+    }
+
+    @GetMapping("/by-location/{id}")
+    public ResponseEntity<List<EventDto>> getAllByLocationId(@PathVariable Long id) {
+        return ResponseEntity.ok(eventService.getAllByLocationId(id));
+    }
+
+    @GetMapping("/by-category/{id}")
+    public ResponseEntity<List<EventDto>> getAllByCategoryId(@PathVariable Long id) {
+        return ResponseEntity.ok(eventService.getAllByCategoryId(id));
+    }
+
+    @GetMapping("/top-selling")
+    public ResponseEntity<List<TopSellingEventDto>> getTopSellingEvents() {
+        List<TopSellingEventDto> topSellingEvents = eventService.getTopSellingEvents();
+        return ResponseEntity.ok(topSellingEvents);
     }
 
     @PutMapping("/{id}")

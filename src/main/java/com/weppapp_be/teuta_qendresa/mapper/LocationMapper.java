@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class VenueMapper implements GenericMapper<Location, LocationDto, VenueRequest>{
+public class LocationMapper implements GenericMapper<Location, LocationDto, VenueRequest>{
     private final ModelMapper mapper;
 
     @Override

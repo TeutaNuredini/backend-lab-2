@@ -1,9 +1,10 @@
 package com.weppapp_be.teuta_qendresa.service;
 
 import com.weppapp_be.teuta_qendresa.dto.EventDto;
+import com.weppapp_be.teuta_qendresa.dto.TopSellingEventDto;
 import com.weppapp_be.teuta_qendresa.dto.request.EventRequest;
 import com.weppapp_be.teuta_qendresa.entity.Event;
-import com.weppapp_be.teuta_qendresa.entity.Venue;
+import com.weppapp_be.teuta_qendresa.entity.Location;
 import com.weppapp_be.teuta_qendresa.entity.Category;
 import com.weppapp_be.teuta_qendresa.exception.ResourceNotFoundException;
 import com.weppapp_be.teuta_qendresa.mapper.EventMapper;
@@ -31,7 +32,7 @@ public class EventService {
 
     public EventDto create(EventRequest request) {
 
-        Venue venue = venueRepository.findById(request.getVenueId())
+        Location location = venueRepository.findById(request.getVenueId())
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Venue with id %s not found", request.getVenueId())));
 
         Category category = categoryRepository.findById(request.getCategoryId())
@@ -40,7 +41,7 @@ public class EventService {
         Event event = eventMapper.toEntity(request);
         event.setCreatedBy(userService.getCurrentUser().getId());
         event.setCreatedAt(LocalDateTime.now());
-        event.setVenue(venue);
+        event.setLocation(location);
         event.setCategory(category);
         Event eventInDb = eventRepository.save(event);
         return eventMapper.toDto(eventInDb);
@@ -56,6 +57,20 @@ public class EventService {
     public List<EventDto> getAll() {
         List<Event> events = eventRepository.findAll();
         return events.stream().map(eventMapper::toDto).collect(Collectors.toList());
+    }
+
+    public List<EventDto> getAllByLocationId(Long locationId) {
+        List<Event> events = eventRepository.findEventByLocationId(locationId);
+        return events.stream().map(eventMapper::toDto).collect(Collectors.toList());
+    }
+
+    public List<EventDto> getAllByCategoryId(Long categoryId) {
+        List<Event> events = eventRepository.findEventByCategoryId(categoryId);
+        return events.stream().map(eventMapper::toDto).collect(Collectors.toList());
+    }
+
+    public List<TopSellingEventDto> getTopSellingEvents() {
+        return eventRepository.findTopSellingEvents();
     }
 
     public EventDto update(Long id, Map<String, Object> fields) {
