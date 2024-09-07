@@ -15,5 +15,4 @@ public class CurrentLoggedInUserDto {
         private String lastName;
         private String email;
         private String role;
-        private List<Long> favoriteGastronomeIds;
 }
