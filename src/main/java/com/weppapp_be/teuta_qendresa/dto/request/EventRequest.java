@@ -10,12 +10,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class EventRequest {
 
-    private Long venueId;
+    private Long locationId;
     private Long categoryId;
     private String name;
     private String description;
-    private LocalDateTime startDate;
+    private LocalDateTime startTime;
+    private String paragraph;
     private String duration;
-    private String eventType;
+    private Long capacity;
+    private Double price;
+    private String imageUrl;
 }
 

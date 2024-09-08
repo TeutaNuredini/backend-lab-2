@@ -1,7 +1,7 @@
 package com.weppapp_be.teuta_qendresa.service;
 
 import com.weppapp_be.teuta_qendresa.dto.LocationDto;
-import com.weppapp_be.teuta_qendresa.dto.request.VenueRequest;
+import com.weppapp_be.teuta_qendresa.dto.request.LocationRequest;
 import com.weppapp_be.teuta_qendresa.entity.Location;
 import com.weppapp_be.teuta_qendresa.exception.ResourceNotFoundException;
 import com.weppapp_be.teuta_qendresa.mapper.LocationMapper;
@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class VenueService {
+public class LocationService {
     private final VenueRepository venueRepository;
     private final LocationMapper locationMapper;
-    private UserService userService;
+    private final UserService userService;
 
-    public LocationDto creat(VenueRequest request){
+    public LocationDto creat(LocationRequest request){
         Location location = locationMapper.toEntity(request);
         location.setCreatedBy(userService.getCurrentUser().getId());
         location.setCreatedAt(LocalDateTime.now());

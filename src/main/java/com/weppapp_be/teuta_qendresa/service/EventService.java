@@ -32,8 +32,8 @@ public class EventService {
 
     public EventDto create(EventRequest request) {
 
-        Location location = venueRepository.findById(request.getVenueId())
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Venue with id %s not found", request.getVenueId())));
+        Location location = venueRepository.findById(request.getLocationId())
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Venue with id %s not found", request.getLocationId())));
 
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Category with id %s not found", request.getCategoryId())));

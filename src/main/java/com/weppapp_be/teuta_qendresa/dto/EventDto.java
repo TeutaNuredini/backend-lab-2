@@ -11,11 +11,15 @@ import java.time.LocalDateTime;
 public class EventDto {
 
     private Long id;
-    private Long venueId;
+    private Long locationId;
     private Long categoryId;
     private String name;
     private String description;
-    private LocalDateTime startDate;
+    private LocalDateTime startTime;
+    private String paragraph;
     private String duration;
+    private Long capacity;
+    private Double price;
+    private String imageUrl;
     private LocalDateTime createdAt;
 }

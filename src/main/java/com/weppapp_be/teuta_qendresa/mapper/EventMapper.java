@@ -14,7 +14,13 @@ public class EventMapper implements GenericMapper<Event, EventDto, EventRequest>
 
     @Override
     public EventDto toDto(Event entity) {
-        return mapper.map(entity, EventDto.class);
+        if (entity == null) {
+            return null;
+        }
+        EventDto dto = mapper.map(entity, EventDto.class);
+        dto.setLocationId(entity.getLocation() != null ? entity.getLocation().getId() : null);
+        dto.setCategoryId(entity.getCategory() != null ? entity.getCategory().getId() : null);
+        return dto;
     }
 
     @Override

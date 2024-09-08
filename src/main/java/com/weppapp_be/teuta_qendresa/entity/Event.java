@@ -15,12 +15,12 @@ import java.time.LocalDateTime;
 @Table(name = "events")
 public class Event extends BaseEntity{
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "venue_id", referencedColumnName = "id")
     @JsonBackReference
     private Location location;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @JsonBackReference
     private Category category;
@@ -43,9 +43,6 @@ public class Event extends BaseEntity{
     @Column(name = "capacity")
     private Long capacity;
 
-    @Column(name = "event_type")
-    private String eventType;
-
     @Column(name = "created_by")
     private Long createdBy;
 
@@ -60,5 +57,8 @@ public class Event extends BaseEntity{
 
     @Column(name = "price")
     private Double price;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 
 }

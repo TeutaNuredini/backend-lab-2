@@ -14,9 +14,13 @@ public class ReservationMapper implements GenericMapper<Reservation, Reservation
 
     @Override
     public ReservationDto toDto(Reservation entity) {
-        return mapper.map(entity, ReservationDto.class);
+        if (entity == null) {
+            return null;
+        }
+        ReservationDto dto = mapper.map(entity, ReservationDto.class);
+        dto.setEventId(entity.getEvent() != null ? entity.getEvent().getId() : null);
+        return dto;
     }
-
     @Override
     public Reservation toEntity(ReservationRequest request) {
         return mapper.map(request, Reservation.class);

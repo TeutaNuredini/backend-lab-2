@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Table(name = "reservations")
 public class Reservation extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "event_id", referencedColumnName = "id")
     @JsonBackReference
     private Event event;

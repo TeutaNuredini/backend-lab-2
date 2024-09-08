@@ -1,8 +1,8 @@
 package com.weppapp_be.teuta_qendresa.controller;
 
 import com.weppapp_be.teuta_qendresa.dto.LocationDto;
-import com.weppapp_be.teuta_qendresa.dto.request.VenueRequest;
-import com.weppapp_be.teuta_qendresa.service.VenueService;
+import com.weppapp_be.teuta_qendresa.dto.request.LocationRequest;
+import com.weppapp_be.teuta_qendresa.service.LocationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,31 +16,31 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class VenueController {
 
-    private final VenueService venueService;
+    private final LocationService locationService;
 
     @PostMapping
-    public ResponseEntity<LocationDto> create(@RequestBody VenueRequest request) {
-        return new ResponseEntity<>(venueService.creat(request), HttpStatus.CREATED);
+    public ResponseEntity<LocationDto> create(@RequestBody LocationRequest request) {
+        return new ResponseEntity<>(locationService.creat(request), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<LocationDto> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(venueService.getById(id));
+        return ResponseEntity.ok(locationService.getById(id));
     }
 
     @GetMapping
     public ResponseEntity<List<LocationDto>> getAll() {
-        return ResponseEntity.ok(venueService.getAll());
+        return ResponseEntity.ok(locationService.getAll());
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<LocationDto> update(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
-        return ResponseEntity.ok(venueService.update(id, fields));
+        return ResponseEntity.ok(locationService.update(id, fields));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        venueService.delete(id);
+        locationService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -68,14 +68,14 @@ public class ReservationService {
 
 
     public ReservationDto getById(Long id) {
-        Reservation reservationInDb = reservationRepository.findById(id)
+        Reservation reservationInDb = reservationRepository.findById(id, userService.getCurrentUser().getId())
                 .orElseThrow(() -> new ResourceNotFoundException(
                         String.format("Reservation with id %s not found", id)));
         return reservationMapper.toDto(reservationInDb);
     }
 
     public List<ReservationDto> getAll() {
-        List<Reservation> reservations = reservationRepository.findAll();
+        List<Reservation> reservations = reservationRepository.findAll(userService.getCurrentUser().getId());
         return reservations.stream().map(reservationMapper::toDto).collect(Collectors.toList());
     }
 
