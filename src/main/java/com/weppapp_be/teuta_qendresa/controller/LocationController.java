@@ -14,7 +14,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/locations")
 @RequiredArgsConstructor
-public class VenueController {
+public class LocationController {
 
     private final LocationService locationService;
 
@@ -28,7 +28,7 @@ public class VenueController {
         return ResponseEntity.ok(locationService.getById(id));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<LocationDto>> getAll() {
         return ResponseEntity.ok(locationService.getAll());
     }

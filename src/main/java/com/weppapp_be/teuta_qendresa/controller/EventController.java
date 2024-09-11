@@ -29,7 +29,7 @@ public class EventController {
         return ResponseEntity.ok(eventService.getById(id));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<EventDto>> getAll() {
         return ResponseEntity.ok(eventService.getAll());
     }

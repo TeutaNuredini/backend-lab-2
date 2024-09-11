@@ -59,7 +59,15 @@ public class SecurityConfig {
                 "/swagger-ui.html",
                 "/swagger-ui/**",
                 "/api/group/**",
-                "api/reservations/email",
+                "/api/locations/all",
+                "/api/locations/{id}",
+                "api/categories/all",
+                "api/categories/{id}",
+                "api/events/all",
+                "api/events/{id}",
+                "api/events/by-location/{id}",
+                "api/events/by-category/{id}",
+                "api/events/top-selling",
         };
     }
 
