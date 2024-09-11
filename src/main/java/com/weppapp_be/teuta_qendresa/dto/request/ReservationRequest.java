@@ -12,4 +12,5 @@ public class ReservationRequest {
     private Long userId;
     private String reservationDate;
     private Long numberOfPeople;
+    private String email;
 }

@@ -1,6 +1,7 @@
 package com.weppapp_be.teuta_qendresa.service;
 
 import com.weppapp_be.teuta_qendresa.dto.ReservationDto;
+import com.weppapp_be.teuta_qendresa.dto.UserReservations;
 import com.weppapp_be.teuta_qendresa.dto.request.ReservationRequest;
 import com.weppapp_be.teuta_qendresa.entity.Event;
 import com.weppapp_be.teuta_qendresa.entity.Reservation;
@@ -27,6 +28,8 @@ public class ReservationService {
     private final EventRepository eventRepository;
     private final ReservationMapper reservationMapper;
     private final UserService userService;
+    private final EmailSenderService emailSenderService;
+
 
     public ReservationDto create(ReservationRequest request) {
         Event event = eventRepository.findById(request.getEventId())
@@ -46,6 +49,9 @@ public class ReservationService {
         reservation.setCreatedBy(userService.getCurrentUser().getId());
         Reservation reservationInDb = reservationRepository.save(reservation);
         updateEventCapacity(event, request.getNumberOfPeople());
+        String SUBJECT_OF_EMAIL = "The Code For Your Reservation";
+        emailSenderService.sendEmail(request.getEmail(), SUBJECT_OF_EMAIL,
+                generateCodeForReservation(request.getUserId(), request.getEventId()) + " is your reservation code.");
         return reservationMapper.toDto(reservationInDb);
     }
 
@@ -79,6 +85,10 @@ public class ReservationService {
         return reservations.stream().map(reservationMapper::toDto).collect(Collectors.toList());
     }
 
+    public List<UserReservations> getAllByUsers() {
+        return reservationRepository.getReservationsByUsers(userService.getCurrentUser().getId());
+    }
+
     public ReservationDto update(Long id, Map<String, Object> fields) {
         Reservation reservationInDb = reservationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -96,4 +106,10 @@ public class ReservationService {
         reservationInDb.setDeletedAt(LocalDateTime.now());
         reservationRepository.save(reservationInDb);
     }
+
+    private String generateCodeForReservation(Long userId, Long eventId) {
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        return userId + "-" + eventId + "-" + timestamp.substring(timestamp.length() - 4);
+    }
+
 }

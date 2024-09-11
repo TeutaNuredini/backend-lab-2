@@ -1,6 +1,7 @@
 package com.weppapp_be.teuta_qendresa.controller;
 
 import com.weppapp_be.teuta_qendresa.dto.ReservationDto;
+import com.weppapp_be.teuta_qendresa.dto.UserReservations;
 import com.weppapp_be.teuta_qendresa.dto.request.EmailRequest;
 import com.weppapp_be.teuta_qendresa.dto.request.ReservationRequest;
 import com.weppapp_be.teuta_qendresa.service.EmailSenderService;
@@ -22,12 +23,6 @@ public class ReservationController {
     private final EmailSenderService emailSenderService;
 
 
-    @PostMapping("/email")
-    public String sendEmail(@RequestBody EmailRequest request) {
-        emailSenderService.sendEmail(request);
-        return "Email sent successfully!";
-    }
-
     @PostMapping
     public ResponseEntity<ReservationDto> create(@RequestBody ReservationRequest request) {
         return new ResponseEntity<>(reservationService.create(request), HttpStatus.CREATED);
@@ -41,6 +36,11 @@ public class ReservationController {
     @GetMapping
     public ResponseEntity<List<ReservationDto>> getAll() {
         return ResponseEntity.ok(reservationService.getAll());
+    }
+
+    @GetMapping("/users-reservations")
+    public ResponseEntity<List<UserReservations>> getAllByUsers() {
+        return ResponseEntity.ok(reservationService.getAllByUsers());
     }
 
     @PutMapping("/{id}")
