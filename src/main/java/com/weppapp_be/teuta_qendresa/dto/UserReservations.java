@@ -19,4 +19,6 @@ public class UserReservations {
     private String username;
     private Role role;
     private LocalDateTime reservationDate;
+    private String eventName;
+    private Long reservationId;
 }

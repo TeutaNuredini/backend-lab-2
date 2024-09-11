@@ -23,10 +23,14 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findEventByCategoryId(Long categoryId);
 
 
-    @Query("SELECT new com.weppapp_be.teuta_qendresa.dto.TopSellingEventDto(e.id, e.name, COUNT(r.id)) " +
+    @Query("SELECT new com.weppapp_be.teuta_qendresa.dto.TopSellingEventDto(e.id, e.name, COUNT(r.id), " +
+            "e.location.id, e.category.id, e.name, e.description, e.startTime, e.paragraph, e.duration, " +
+            "e.capacity, e.price, e.imageUrl, e.createdAt) " +
             "FROM Event e LEFT JOIN Reservation r ON r.event.id = e.id " +
             "WHERE e.deletedAt IS NULL " +
-            "GROUP BY e.id, e.name " +
-            "ORDER BY COUNT(r.id) DESC")
+            "GROUP BY e.id, e.name, e.location.id, e.category.id, e.description, e.startTime, e.paragraph, " +
+            "e.duration, e.capacity, e.price, e.imageUrl, e.createdAt " +
+            "ORDER BY COUNT(r.id) DESC LIMIT 3")
     List<TopSellingEventDto> findTopSellingEvents();
+
 }

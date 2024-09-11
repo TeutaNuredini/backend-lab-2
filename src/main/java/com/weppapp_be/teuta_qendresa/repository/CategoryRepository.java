@@ -20,7 +20,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query("SELECT new com.weppapp_be.teuta_qendresa.dto.CategoryWithEvents(c.id, c.name, " +
             "c.description, COUNT(e.id), c.createdAt) FROM Category c " +
             "LEFT JOIN Event e ON e.category.id = c.id " +
-            "WHERE c.deletedAt IS NULL " +
+            "WHERE c.deletedAt IS NULL AND e.deletedAt IS NULL " +
             "GROUP BY c.id, c.name, c.description, c.createdAt")
     List<CategoryWithEvents> findAllCategoriesWithProperlyEvents();
 

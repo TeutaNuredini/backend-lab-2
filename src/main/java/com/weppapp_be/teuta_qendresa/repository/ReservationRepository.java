@@ -18,7 +18,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     boolean existsByUserIdAndEventId(Long userId, Long eventId);
 
-    @Query("SELECT new com.weppapp_be.teuta_qendresa.dto.UserReservations(u.id, u.firstName, u.lastName, u.username, u.role, r.createdAt) " +
+    @Query("SELECT new com.weppapp_be.teuta_qendresa.dto.UserReservations(u.id, u.firstName, u.lastName, u.username, u.role, " +
+            "r.createdAt, e.name, r.id) " +
             "FROM User u " +
             "JOIN Reservation r ON u.id = r.userId " +
             "JOIN Event e ON e.id = r.event.id " +
