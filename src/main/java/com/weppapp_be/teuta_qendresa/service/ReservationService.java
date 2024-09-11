@@ -36,11 +36,11 @@ public class ReservationService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         String.format("Event with id %s not found", request.getEventId())));
 
-        if (reservationRepository.existsByUserIdAndEventId(request.getUserId(), request.getEventId())) {
-            throw new ReservationAlreadyExistsException(
-                    String.format("Reservation for user_id: %s in event_id: %s already exists",
-                            request.getUserId(), request.getEventId()));
-        }
+//        if (reservationRepository.existsByUserIdAndEventId(request.getUserId(), request.getEventId())) {
+//            throw new ReservationAlreadyExistsException(
+//                    String.format("Reservation for user_id: %s in event_id: %s already exists",
+//                            request.getUserId(), request.getEventId()));
+//        }
         validateCapacityAvailability(event, request.getNumberOfPeople());
 
         Reservation reservation = reservationMapper.toEntity(request);
