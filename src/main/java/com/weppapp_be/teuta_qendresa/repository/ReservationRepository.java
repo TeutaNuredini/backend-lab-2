@@ -24,6 +24,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "JOIN Reservation r ON u.id = r.userId " +
             "JOIN Event e ON e.id = r.event.id " +
             "WHERE r.deletedAt IS NULL AND e.createdBy = :createdBy " +
-            "GROUP BY u.id, u.firstName, u.lastName, u.username, u.role, r.createdAt")
+            "GROUP BY u.id, u.firstName, u.lastName, u.username, u.role, r.createdAt, e.name, r.id")
    List<UserReservations> getReservationsByUsers(Long createdBy);
 }
