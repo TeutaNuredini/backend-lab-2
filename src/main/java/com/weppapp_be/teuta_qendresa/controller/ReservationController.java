@@ -20,7 +20,6 @@ import java.util.Map;
 public class ReservationController {
 
     private final ReservationService reservationService;
-    private final EmailSenderService emailSenderService;
 
 
     @PostMapping

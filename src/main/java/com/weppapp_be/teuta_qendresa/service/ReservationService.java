@@ -3,12 +3,14 @@ package com.weppapp_be.teuta_qendresa.service;
 import com.weppapp_be.teuta_qendresa.dto.ReservationDto;
 import com.weppapp_be.teuta_qendresa.dto.UserReservations;
 import com.weppapp_be.teuta_qendresa.dto.request.ReservationRequest;
+import com.weppapp_be.teuta_qendresa.entity.Email;
 import com.weppapp_be.teuta_qendresa.entity.Event;
 import com.weppapp_be.teuta_qendresa.entity.Reservation;
 import com.weppapp_be.teuta_qendresa.exception.IlegalNumberOfSeatsException;
 import com.weppapp_be.teuta_qendresa.exception.ReservationAlreadyExistsException;
 import com.weppapp_be.teuta_qendresa.exception.ResourceNotFoundException;
 import com.weppapp_be.teuta_qendresa.mapper.ReservationMapper;
+import com.weppapp_be.teuta_qendresa.repository.EmailRepository;
 import com.weppapp_be.teuta_qendresa.repository.EventRepository;
 import com.weppapp_be.teuta_qendresa.repository.ReservationRepository;
 import com.weppapp_be.teuta_qendresa.util.ReflectionUtil;
@@ -29,6 +31,7 @@ public class ReservationService {
     private final ReservationMapper reservationMapper;
     private final UserService userService;
     private final EmailSenderService emailSenderService;
+    private final EmailRepository emailRepository;
 
 
     public ReservationDto create(ReservationRequest request) {
